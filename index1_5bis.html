@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تمرين مبتدئ - Pandas NumPy Matplotlib</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+      direction: rtl;
+    }
+    header {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    header img { height: 80px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3)); }
+    header h2 { flex: 1; text-align: center; font-size: 1.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+    .container {
+      max-width: 950px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      border-radius: 20px;
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-title {
+      font-size: 1.8rem;
+      color: #2a5298;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .subtitle {
+      text-align: center;
+      color: #555;
+      margin-bottom: 25px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+    .note {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      color: #856404;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      line-height: 1.9;
+      text-align: center;
+    }
+    .section {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-right: 5px solid #667eea;
+    }
+    .section p, .section li {
+      line-height: 1.9;
+      font-size: 1rem;
+    }
+    ol { padding-right: 25px; }
+    .question-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      border: 1px solid #e9ecef;
+    }
+    .question-number {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 1.4rem;
+      background: #e3f2fd;
+      color: #1976d2;
+      margin-bottom: 12px;
+    }
+    .question-text-ar {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #333;
+      margin-bottom: 15px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border-right: 4px solid #667eea;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+    .data-table th, .data-table td {
+      padding: 12px;
+      border: 1px solid #dbe5ef;
+      text-align: center;
+      font-size: 1rem;
+    }
+    .data-table th {
+      background: #e3f2fd;
+      color: #1976d2;
+      font-weight: bold;
+    }
+    .data-table td { background: #fcfdff; }
+    .table-caption {
+      margin-top: 10px;
+      margin-bottom: 8px;
+      color: #2a5298;
+      font-weight: bold;
+      text-align: center;
+    }
+    .important {
+      background: #e8f0fe;
+      border-right: 5px solid #667eea;
+      padding: 18px;
+      border-radius: 15px;
+      margin: 20px 0;
+      text-align: center;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #2c3e50;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 30px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      text-decoration: none;
+      margin-top: 10px;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+    .footer-note {
+      text-align: center;
+      margin-top: 25px;
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+    @media (max-width: 768px) {
+      .container { margin: 10px; padding: 15px; }
+      header { flex-direction: column; text-align: center; }
+      header h2 { font-size: 1rem; }
+      header img { height: 50px; }
+      .form-title { font-size: 1.4rem; }
+      .data-table th, .data-table td { font-size: 0.85rem; padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/logo_faculte.png" alt="شعار الكلية" onerror="this.style.display='none'">
+    <h2>
+      كلية العلوم الاقتصادية والتجارية وعلوم التسيير<br>
+      قسم العلوم الاقتصادية<br>
+      السنة الأولى ماستر اقتصاد وتسيير المؤسسات
+    </h2>
+    <img src="images/logo_departement.png" alt="شعار القسم" onerror="this.style.display='none'">
+  </header>
+
+  <div class="container">
+    <div class="form-title">تمرين</div>
+    <p class="subtitle">
+      <strong>pandas - numpy - matplotlib</strong>
+    </p>
+
+    <div class="note">
+      <strong>تعليمات مهمة:</strong><br>
+      يجب حل هذا التمرين داخل نفس ملف Google Colab الذي شاركته مع الأستاذ.<br>
+      أي عبر الإيميل: eco.egemaster1@gmail.com<br>
+      <strong>يمكن الاستعانة بالذكاء الاصطناعي عند حل التمرين بشرط فهم الحل الذي يقدمه لك.</strong>
+    </div>
+
+    <div class="section">
+      <p>
+        ليكن لديك الجدول التالي الذي يمثل مبيعات مؤسسة صغيرة خلال خمسة أشهر.
+        المطلوب كتابة برنامج باستعمال مكتبات <strong>pandas</strong> و <strong>numpy</strong> و <strong>matplotlib</strong>
+        من أجل تخزين البيانات، حساب رقم الأعمال والتكاليف والأرباح، ثم تمثيل النتائج بيانياً.
+      </p>
+
+      <div class="table-caption">بيانات المبيعات:</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>الشهر</th>
+            <th>المنتج</th>
+            <th>الكمية المباعة</th>
+            <th>سعر الوحدة</th>
+            <th>تكلفة الوحدة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Jan</td><td>Bread</td><td>120</td><td>50</td><td>30</td></tr>
+          <tr><td>Feb</td><td>Bread</td><td>150</td><td>50</td><td>30</td></tr>
+          <tr><td>Mar</td><td>Cake</td><td>80</td><td>120</td><td>70</td></tr>
+          <tr><td>Apr</td><td>Cake</td><td>95</td><td>120</td><td>70</td></tr>
+          <tr><td>May</td><td>Pizza</td><td>60</td><td>200</td><td>130</td></tr>
+        </tbody>
+      </table>
+
+      <div class="question-card">
+        <span class="question-number">المطلوب</span>
+
+        <div class="question-text-ar">
+          1- أنشئ قائمة اسمها <strong>months</strong> تحتوي على الأشهر الخمسة الموجودة في الجدول، ثم اعرض أول شهر في القائمة.
+        </div>
+
+        <div class="question-text-ar">
+          2- أنشئ متغيراً نصياً اسمه <strong>product_name</strong> يحتوي على القيمة <strong>bread</strong>، ثم حوّله إلى حروف كبيرة باستعمال الدالة <strong>upper()</strong>.
+        </div>
+
+        <div class="question-text-ar">
+          3- أنشئ قاموساً اسمه <strong>company</strong> يحتوي على اسم المؤسسة، المدينة، والنشاط، ثم اعرض اسم المؤسسة والمدينة.
+        </div>
+        
+        <div class="question-text-ar">
+          4- أنشئ <strong>DataFrame</strong> يحتوي على بيانات المبيعات: الشهر، المنتج، الكمية المباعة، سعر الوحدة، وتكلفة الوحدة.
+        </div>
+
+        <div class="question-text-ar">
+          5- اعرض أول خمسة أسطر من البيانات باستعمال الدالة <strong>head()</strong>.
+        </div>
+
+        <div class="question-text-ar">
+          6- أضف عموداً جديداً اسمه <strong>Revenue</strong> يمثل رقم الأعمال، حيث:
+          <strong>Revenue = Quantity × Price</strong>
+        </div>
+
+        <div class="question-text-ar">
+          7- أضف عموداً جديداً اسمه <strong>Total_Cost</strong> يمثل التكلفة الكلية، حيث:
+          <strong>Total_Cost = Quantity × Cost</strong>
+        </div>
+
+        <div class="question-text-ar">
+          8- أضف عموداً جديداً اسمه <strong>Profit</strong> يمثل الربح، حيث:
+          <strong>Profit = Revenue - Total_Cost</strong>
+        </div>
+
+        <div class="question-text-ar">
+          9- أضف عموداً جديداً اسمه <strong>Result</strong>، تكون قيمته <strong>Profitable</strong> إذا كان الربح أكبر من 0،
+          و <strong>Loss</strong> إذا كان الربح أقل أو يساوي 0.
+        </div>
+
+        <div class="question-text-ar">
+          10- استعمل مكتبة <strong>numpy</strong> لحساب متوسط رقم الأعمال والانحراف المعياري لرقم الأعمال.
+        </div>
+
+        <div class="question-text-ar">
+          11- احسب مجموع الأرباح خلال الأشهر الخمسة، ثم استخرج أفضل شهر من حيث الربح.
+        </div>
+
+        <div class="question-text-ar">
+          12- أرسم مخطط أعمدة يوضح رقم الأعمال حسب كل شهر، بحيث تكون الأشهر على المحور الأفقي ورقم الأعمال على المحور العمودي.
+        </div>
+
+        <div class="question-text-ar">
+          13- أرسم مخطط أعمدة ثانياً يوضح الربح حسب كل شهر.
+        </div>
+
+        <div class="question-text-ar">
+          14- أنشئ تمثيلاً بيانياً ثالثاً من نوع <strong>histogram</strong> لتوزيع الأرباح، ثم علّق باختصار على النتائج.
+        </div>
+      </div>
+
+      
+
+      <div class="note">
+        <strong>تنبيه</strong><br>
+        الحل يجب أن يتم عبر منصة Google Colab، مع احترام ترتيب الأسئلة وكتابة تعليقات قصيرة داخل الكود.
+      </div>
+
+      <div style="text-align:center;">
+        <a class="btn" href="https://colab.research.google.com/" target="_blank">فتح Google Colab</a>
+      </div>
+
+      <div class="footer-note">
+        <h3>تم إعداد التمرين من قبل <strong>الدكتور زيات عادل</strong></h3>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
